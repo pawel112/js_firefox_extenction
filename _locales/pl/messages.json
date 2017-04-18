@@ -1,0 +1,34 @@
+{
+	"extensionName":
+	{
+		"message": "Buyer Alert"
+	},
+
+	"extensionDescription":
+	{
+		"message": "Powiadamia ona użytkownika, jeśli znajdzie się na stronie o adresie lub zawartości zawartej w filtrze."
+	},
+
+	"notificationTitle":
+	{
+		"message": "Ostrzeżenie!"
+	},
+
+	"notificationContent":
+	{
+		"message": "Wybrana strona $URL$. znajduje się w filtrze $filtr$.",
+		"placeholders":
+		{
+			"url" :
+			{
+				"content" : "$1",
+				"example" : "https://developer.mozilla.org"
+			},
+			"filtr" :
+			{
+				"content" : "$2",
+				"example" : "country.json"
+			}
+		}
+	}
+}
