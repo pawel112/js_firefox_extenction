@@ -8,6 +8,7 @@ function notify (message)
 	console.log("background script received message");
 	var title = browser.i18n.getMessage("notificationTitle");
 	var content = browser.i18n.getMessage("notificationContent", [ message.url, "aaa.json"]);
+	var button_close = browser.i18n.getMessage("notificationButtonIgnore");
 	
 	browser.notifications.create({
 		"type": "basic",
