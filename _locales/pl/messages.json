@@ -14,14 +14,9 @@
 		"message": "Ostrzeżenie!"
 	},
 	
-	"notificationButtonIgnore":
+	"notificationURL":
 	{
-		"message": "Zignoruj"
-	},
-
-	"notificationContent":
-	{
-		"message": "Wybrana strona $URL$. znajduje się w filtrze $filtr$.",
+		"message": "Wybrana strona $URL$ jest zawarta w filtrze $filtr$.\n\nZalecany jest wybór innego sklepu.\nKliknij, aby zamknąć komunikat.",
 		"placeholders":
 		{
 			"url" :
@@ -33,6 +28,52 @@
 			{
 				"content" : "$2",
 				"example" : "country.json"
+			}
+		}
+	},
+	
+	"notificationProduct":
+	{
+		"message": "Na wybranej stronie $URL$ znajduje się produkt ($product$) zawarty w filtrze $filtr$.\n\nZalecany jest wybór innego produktu.\nKliknij, aby zamknąć komunikat.",
+		"placeholders":
+		{
+			"url" :
+			{
+				"content" : "$1",
+				"example" : "https://developer.mozilla.org"
+			},
+			"filtr" :
+			{
+				"content" : "$2",
+				"example" : "country.json"
+			},
+			"product" :
+			{
+				"content" : "$3",
+				"example" : "example"
+			}
+		}
+	},
+	
+	"notificationDelivery":
+	{
+		"message": "Na wybranej stronie $URL$ znajduje się sposób dostawy zawarty w filtrze $filtr$.\n\nZalecany jest wybór innego sposobu dostawy.\nKliknij, aby zamknąć komunikat.",
+		"placeholders":
+		{
+			"url" :
+			{
+				"content" : "$1",
+				"example" : "https://developer.mozilla.org"
+			},
+			"filtr" :
+			{
+				"content" : "$2",
+				"example" : "country.json"
+			},
+			"product" :
+			{
+				"content" : "$3",
+				"example" : "example"
 			}
 		}
 	}
