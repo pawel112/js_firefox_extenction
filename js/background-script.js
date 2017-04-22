@@ -51,7 +51,11 @@ function notify (message)
 	var result = URLinJson (message.url, json_text);
 	var content = null;
 	
-	if (result != false)
+	if ((message.url == null) || (message.url == "") || (message.url == undefined))
+	{
+		return;
+	}
+	else if (result != false)
 	{
 		content = browser.i18n.getMessage("notificationURL", [ message.url, "aaa.json"]);
 	}

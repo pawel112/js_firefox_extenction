@@ -14,6 +14,76 @@
 		"message": "Ostrzeżenie!"
 	},
 	
+	"optionsTitle":
+	{
+		"message": "Opcje"
+	},
+	
+	"optionsIgnoredURL":
+	{
+		"message": "Ignorowane strony:"
+	},
+	
+	"optionsIgnoredWord":
+	{
+		"message": "Ignorowane hasła:"
+	},
+	
+	"optionsIgnoredCourierCompany":
+	{
+		"message": "Ignorowane opcje wysyłki:"
+	},
+	
+	"optionsIgnoredNone":
+	{
+		"message": "Brak"
+	},
+	
+	"optionsIgnoredRemove":
+	{
+		"message": "Usuń z listy"
+	},
+	
+	"optionsLists":
+	{
+		"message": "Listy filtrów:"
+	},
+	
+	"optionsAddToList":
+	{
+		"message": "Dodaj filtr"
+	},
+	
+	"optionsRemoveFromList":
+	{
+		"message": "Usuń filtr"
+	},
+	
+	"optionsUpdateFrequencyList":
+	{
+		"message": "Częstotliwość aktualizacji filtrów:"
+	},
+	
+	"optionsUpdateFrequencyListDaily":
+	{
+		"message": "Codziennie"
+	},
+	
+	"optionsUpdateFrequencyListTwiceWeekly":
+	{
+		"message": "Dwa razy w tygodniu"
+	},
+	
+	"optionsUpdateFrequencyListOnceWeek":
+	{
+		"message": "Raz w tygodniu"
+	},
+	
+	"optionsSave":
+	{
+		"message": "Zapisz"
+	},
+	
 	"notificationURL":
 	{
 		"message": "Wybrana strona $URL$ jest zawarta w filtrze $filtr$.\n\nZalecany jest wybór innego sklepu.\nKliknij, aby zamknąć komunikat.",
