@@ -146,28 +146,88 @@ function restoreOptions()
 	});
 }
 
+function removeLists(numer)
+{
+	
+}
+
+function removeURL(numer)
+{
+	
+}
+
+function optionsRemoveWord(numer)
+{
+	
+}
+
+function removeCourierCompany(numer)
+{
+	
+}
+
 function addNewFieldList()
 {
-	document.getElementById("optionsLists").innerHTML += "<br/><textarea name=\"lists\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
+	var temp = new Array();
+	for (var i=0; i<document.getElementsByName("lists").length; i++)
+	{
+		temp.push (document.getElementsByName("lists")[i].value);
+	}
 	
+	document.getElementById("optionsLists").innerHTML += "<br/><textarea name=\"lists\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveLists\" onclick=\"removeLists("+document.getElementsByName("lists").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	
+	for (var i=0; i<temp.length; i++)
+	{
+		document.getElementsByName("lists")[i].value = temp[i];
+	}
 }
 
 function addNewFieldURL()
 {
-	document.getElementById("optionsIgnoredURL").innerHTML += "<br/><textarea name=\"ignoredURL\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
+	var temp = new Array();
+	for (var i=0; i<document.getElementsByName("ignoredURL").length; i++)
+	{
+		temp.push (document.getElementsByName("ignoredURL")[i].value);
+	}
 	
+	document.getElementById("optionsIgnoredURL").innerHTML += "<br/><textarea name=\"ignoredURL\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveURL\" onclick=\"removeURL("+document.getElementsByName("ignoredURL").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	
+	for (var i=0; i<temp.length; i++)
+	{
+		document.getElementsByName("ignoredURL")[i].value = temp[i];
+	}
 }
 
 function addNewFieldWord()
 {
-	document.getElementById("optionsIgnoredWord").innerHTML += "<br/><textarea name=\"ignoredWord\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
+	var temp = new Array();
+	for (var i=0; i<document.getElementsByName("ignoredWord").length; i++)
+	{
+		temp.push (document.getElementsByName("ignoredWord")[i].value);
+	}
 	
+	document.getElementById("optionsIgnoredWord").innerHTML += "<br/><textarea name=\"ignoredWord\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveWord\" onclick=\"removeRemoveWord("+document.getElementsByName("ignoredWord").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	
+	for (var i=0; i<temp.length; i++)
+	{
+		document.getElementsByName("ignoredWord")[i].value = temp[i];
+	}
 }
 
 function addNewFieldCourierCompany()
 {
-	document.getElementById("optionsIgnoredCourierCompany").innerHTML += "<br/><textarea name=\"ignoredCourierCompany\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
+	var temp = new Array();
+	for (var i=0; i<document.getElementsByName("ignoredCourierCompany").length; i++)
+	{
+		temp.push (document.getElementsByName("ignoredCourierCompany")[i].value);
+	}
 	
+	document.getElementById("optionsIgnoredCourierCompany").innerHTML += "<br/><textarea name=\"ignoredCourierCompany\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveCourierCompany\" onclick=\"removeCourierCompany("+document.getElementsByName("ignoredCourierCompany").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	
+	for (var i=0; i<temp.length; i++)
+	{
+		document.getElementsByName("ignoredCourierCompany")[i].value = temp[i];
+	}
 }
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
