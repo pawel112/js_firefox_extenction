@@ -84,6 +84,11 @@
 		"message": "Zapisz"
 	},
 	
+	"optionsClearSettings":
+	{
+		"message": "Ustawienia fabryczne"
+	},
+	
 	"notificationURL":
 	{
 		"message": "Wybrana strona $URL$ jest zawarta w filtrze $filtr$.\n\nZalecany jest wybór innego sklepu.\nKliknij, aby zamknąć komunikat.",

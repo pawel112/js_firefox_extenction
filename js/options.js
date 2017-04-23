@@ -60,7 +60,7 @@ function restoreOptions()
 		}
 		document.getElementsByName("optionsUpdateFrequencyListValue")[res.optionsUpdateFrequencyListValue].checked = true;
 		
-		if (!((res.optionsLists == [""]) || (res.optionsLists == "") || (res.optionsLists == null) || (res.optionsLists == undefined)))
+		if (res.optionsLists.length != 0)
 		{
 			for (var i=0; i<res.optionsLists.length; i++)
 			{
@@ -73,7 +73,7 @@ function restoreOptions()
 		}
 		else
 		{
-			document.getElementsByName("optionsLists").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
+			document.getElementById("optionsLists").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
 			res.optionsLists = "";
 			browser.storage.local.set
 			({	  
@@ -81,7 +81,7 @@ function restoreOptions()
 			});
 		}
 		
-		if (!((res.optionsIgnoredURL == [""]) || (res.optionsIgnoredURL == "") || (res.optionsIgnoredURL == null) || (res.optionsIgnoredURL == undefined)))
+		if (res.optionsIgnoredURL.length != 0)
 		{
 			for (var i=0; i<res.optionsIgnoredURL.length; i++)
 			{
@@ -94,7 +94,7 @@ function restoreOptions()
 		}
 		else
 		{
-			document.getElementsByName("optionsIgnoredURL").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
+			document.getElementById("optionsIgnoredURL").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
 			res.optionsIgnoredURL = "";
 			browser.storage.local.set
 			({	  
@@ -102,7 +102,7 @@ function restoreOptions()
 			});
 		}
 		
-		if (!((res.optionsIgnoredWord == [""]) || (res.optionsIgnoredWord == "") || (res.optionsIgnoredWord == null) || (res.optionsIgnoredWord == undefined)))
+		if (res.optionsIgnoredWord.length != 0)
 		{
 			for (var i=0; i<res.optionsIgnoredWord.length; i++)
 			{
@@ -115,7 +115,7 @@ function restoreOptions()
 		}
 		else
 		{
-			document.getElementsByName("optionsIgnoredWord").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
+			document.getElementById("optionsIgnoredWord").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
 			res.optionsIgnoredWord = "";
 			browser.storage.local.set
 			({	  
@@ -123,7 +123,7 @@ function restoreOptions()
 			});
 		}
 		
-		if (!((res.optionsIgnoredCourierCompany == [""]) || (res.optionsIgnoredCourierCompany == "") || (res.optionsIgnoredCourierCompany == null) || (res.optionsIgnoredCourierCompany == undefined)))
+		if (res.optionsIgnoredCourierCompany.length != 0)
 		{
 			for (var i=0; i<res.optionsIgnoredCourierCompany.length; i++)
 			{
@@ -148,22 +148,67 @@ function restoreOptions()
 
 function removeLists(numer)
 {
+	var temp = new Array();
+	browser.storage.local.get().then((res) =>
+	{
+		temp = res.optionsLists;
+		temp.splice (numer, 1);
+	});
 	
+	browser.storage.local.set
+ 	({	  
+		optionsLists: temp
+	});
 }
 
 function removeURL(numer)
 {
+	var temp = new Array();
+	browser.storage.local.get().then((res) =>
+	{
+		temp = res.optionsIgnoredURL;
+		temp.splice (numer, 1);
+	});
 	
+	browser.storage.local.set
+ 	({	  
+		optionsIgnoredURL: temp
+	});
+}
+
+function clearSettings()
+{
+	browser.storage.local.clear();
 }
 
 function optionsRemoveWord(numer)
 {
+	var temp = new Array();
+	browser.storage.local.get().then((res) =>
+	{
+		temp = res.optionsIgnoredWord;
+		temp.splice (numer, 1);
+	});
 	
+	browser.storage.local.set
+ 	({	  
+		optionsIgnoredWord: temp
+	});
 }
 
 function removeCourierCompany(numer)
 {
+	var temp = new Array();
+	browser.storage.local.get().then((res) =>
+	{
+		temp = res.optionsIgnoredCourierCompany;
+		temp.splice (numer, 1);
+	});
 	
+	browser.storage.local.set
+ 	({	  
+		optionsIgnoredCourierCompany: temp
+	});
 }
 
 function addNewFieldList()
@@ -174,7 +219,7 @@ function addNewFieldList()
 		temp.push (document.getElementsByName("lists")[i].value);
 	}
 	
-	document.getElementById("optionsLists").innerHTML += "<br/><textarea name=\"lists\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveLists\" onclick=\"removeLists("+document.getElementsByName("lists").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	document.getElementById("optionsLists").innerHTML += "<br/><textarea name=\"lists\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveLists\" onclick=\"removeLists("+document.getElementsByName("lists").length+")\">"+browser.i18n.getMessage("optionsRemoveFromList")+"</button>";
 	
 	for (var i=0; i<temp.length; i++)
 	{
@@ -236,6 +281,7 @@ document.getElementById('optionsAddList').addEventListener("click", addNewFieldL
 document.getElementById('optionsAddURL').addEventListener("click", addNewFieldURL);
 document.getElementById('optionsAddWord').addEventListener("click", addNewFieldWord);
 document.getElementById('optionsAddCourierCompany').addEventListener("click", addNewFieldCourierCompany);
+document.getElementById('optionsClearSettings').addEventListener("click", clearSettings);
 
 document.getElementById("optionsLists").innerHTML += browser.i18n.getMessage("optionsLists");
 document.getElementById("optionsUpdateFrequencyList").innerHTML += browser.i18n.getMessage("optionsUpdateFrequencyList");
@@ -252,3 +298,4 @@ document.getElementById("optionsAddList").innerHTML += browser.i18n.getMessage("
 document.getElementById("optionsAddURL").innerHTML = browser.i18n.getMessage("optionsAddToList");
 document.getElementById("optionsAddWord").innerHTML += browser.i18n.getMessage("optionsAddToList");
 document.getElementById("optionsAddCourierCompany").innerHTML += browser.i18n.getMessage("optionsAddToList");
+document.getElementById("optionsClearSettings").innerHTML += browser.i18n.getMessage("optionsClearSettings");
