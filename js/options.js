@@ -3,23 +3,45 @@ function saveOptions(e)
 	//TODO
 	//SPRAWDZANIE PÓL
 	
-	var UpdateFrequencyListValue = null;
+	var updateFrequencyListValue = 2;
+	var lists = new Array();
+	var ignoredURL = new Array();
+	var ignoredWord = new Array();
+	var ignoredCourierCompany = new Array();
+	
+	for (var i=0; i<document.getElementsByName("lists").length; i++)
+	{
+		lists.push (document.getElementsByName("lists")[i].value);
+	}
+	for (var i=0; i<document.getElementsByName("ignoredURL").length; i++)
+	{
+		ignoredURL.push (document.getElementsByName("ignoredURL")[i].value);
+	}
+	for (var i=0; i<document.getElementsByName("ignoredWord").length; i++)
+	{
+		ignoredWord.push (document.getElementsByName("ignoredWord")[i].value);
+	}
+	for (var i=0; i<document.getElementsByName("ignoredCourierCompany").length; i++)
+	{
+		ignoredCourierCompany.push (document.getElementsByName("ignoredCourierCompany")[i].value);
+	}
+	
 	if (document.getElementsByName("optionsUpdateFrequencyListValue")[0].checked == true)
 	{
-		UpdateFrequencyListValue = 0;
+		updateFrequencyListValue = 0;
 	}
 	else if (document.getElementsByName("optionsUpdateFrequencyListValue")[1].checked == true)
 	{
-		UpdateFrequencyListValue = 1;
-	}
-	else
-	{
-		UpdateFrequencyListValue = 2;
+		updateFrequencyListValue = 1;
 	}
 	
  	browser.storage.local.set
  	({	  
-		optionsUpdateFrequencyListValue: UpdateFrequencyListValue
+		optionsUpdateFrequencyListValue: updateFrequencyListValue,
+		optionsLists: lists,
+		optionsIgnoredURL: ignoredURL,
+		optionsIgnoredWord: ignoredWord,
+		optionsIgnoredCourierCompany: ignoredCourierCompany
 	});
 	e.preventDefault();
 }
@@ -38,55 +60,79 @@ function restoreOptions()
 		}
 		document.getElementsByName("optionsUpdateFrequencyListValue")[res.optionsUpdateFrequencyListValue].checked = true;
 		
-		if (!((res.optionsLists == "") || (res.optionsLists == null) || (res.optionsLists == undefined)))
+		if (!((res.optionsLists == [""]) || (res.optionsLists == "") || (res.optionsLists == null) || (res.optionsLists == undefined)))
 		{
-			//TODO
-			//ZAPIS DO PÓL
+			for (var i=0; i<res.optionsLists.length; i++)
+			{
+				addNewFieldList();
+			}
+			for (var i=0; i<res.optionsLists.length; i++)
+			{
+				document.getElementsByName("lists")[i].value = res.optionsLists[i];
+			}
 		}
 		else
 		{
-			document.getElementById("optionsLists").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
+			document.getElementsByName("optionsLists").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
 			res.optionsLists = "";
 			browser.storage.local.set
 			({	  
-				optionsLists: ""
+				optionsLists: new Array()
 			});
 		}
 		
-		if (!((res.optionsIgnoredURL == "") || (res.optionsIgnoredURL == null) || (res.optionsIgnoredURL == undefined)))
+		if (!((res.optionsIgnoredURL == [""]) || (res.optionsIgnoredURL == "") || (res.optionsIgnoredURL == null) || (res.optionsIgnoredURL == undefined)))
 		{
-			//TODO
-			//ZAPIS DO PÓL
+			for (var i=0; i<res.optionsIgnoredURL.length; i++)
+			{
+				addNewFieldURL();
+			}
+			for (var i=0; i<res.optionsIgnoredURL.length; i++)
+			{
+				document.getElementsByName("ignoredURL")[i].value = res.optionsIgnoredURL[i];
+			}
 		}
 		else
 		{
-			document.getElementById("optionsIgnoredURL").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
+			document.getElementsByName("optionsIgnoredURL").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
 			res.optionsIgnoredURL = "";
 			browser.storage.local.set
 			({	  
-				optionsIgnoredURL: ""
+				optionsIgnoredURL: new Array()
 			});
 		}
 		
-		if (!((res.optionsIgnoredWord == "") || (res.optionsIgnoredWord == null) || (res.optionsIgnoredWord == undefined)))
+		if (!((res.optionsIgnoredWord == [""]) || (res.optionsIgnoredWord == "") || (res.optionsIgnoredWord == null) || (res.optionsIgnoredWord == undefined)))
 		{
-			//TODO
-			//ZAPIS DO PÓL
+			for (var i=0; i<res.optionsIgnoredWord.length; i++)
+			{
+				addNewFieldWord();
+			}
+			for (var i=0; i<res.optionsIgnoredWord.length; i++)
+			{
+				document.getElementsByName("ignoredWord")[i].value = res.optionsIgnoredWord[i];
+			}
 		}
 		else
 		{
-			document.getElementById("optionsIgnoredWord").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
+			document.getElementsByName("optionsIgnoredWord").innerHTML += "<br/>"+browser.i18n.getMessage("optionsIgnoredNone");	
 			res.optionsIgnoredWord = "";
 			browser.storage.local.set
 			({	  
-				optionsIgnoredWord: ""
+				optionsIgnoredWord: new Array()
 			});
 		}
 		
-		if (!((res.optionsIgnoredCourierCompany == "") || (res.optionsIgnoredCourierCompany == null) || (res.optionsIgnoredCourierCompany == undefined)))
+		if (!((res.optionsIgnoredCourierCompany == [""]) || (res.optionsIgnoredCourierCompany == "") || (res.optionsIgnoredCourierCompany == null) || (res.optionsIgnoredCourierCompany == undefined)))
 		{
-			//TODO
-			//ZAPIS DO PÓL
+			for (var i=0; i<res.optionsIgnoredCourierCompany.length; i++)
+			{
+				addNewFieldCourierCompany();
+			}
+			for (var i=0; i<res.optionsIgnoredCourierCompany.length; i++)
+			{
+				document.getElementsByName("ignoredCourierCompany")[i].value = res.optionsIgnoredCourierCompany[i];
+			}
 		}
 		else
 		{
@@ -94,40 +140,42 @@ function restoreOptions()
 			res.optionsIgnoredCourierCompany = "";
 			browser.storage.local.set
 			({	  
-				optionsIgnoredCourierCompany: ""
+				optionsIgnoredCourierCompany: new Array()
 			});
 		}
-		
 	});
 }
 
 function addNewFieldList()
 {
-	//TODO
-	//DODAĆ POJAWIANIE SIĘ POLA PUSTEGO
+	document.getElementById("optionsLists").innerHTML += "<br/><textarea name=\"lists\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
+	
 }
 
 function addNewFieldURL()
 {
+	document.getElementById("optionsIgnoredURL").innerHTML += "<br/><textarea name=\"ignoredURL\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
 	
 }
 
 function addNewFieldWord()
 {
+	document.getElementById("optionsIgnoredWord").innerHTML += "<br/><textarea name=\"ignoredWord\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
 	
 }
 
 function addNewFieldCourierCompany()
 {
+	document.getElementById("optionsIgnoredCourierCompany").innerHTML += "<br/><textarea name=\"ignoredCourierCompany\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea>";
 	
 }
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
-document.getElementById("optionsAddList").addEventListener("submit", addNewFieldList);
-document.getElementById("optionsAddURL").addEventListener("submit", addNewFieldURL);
-document.getElementById("optionsAddWord").addEventListener("submit", addNewFieldWord);
-document.getElementById("optionsAddCourierCompany").addEventListener("submit", addNewFieldCourierCompany);
+document.getElementById('optionsAddList').addEventListener("click", addNewFieldList);
+document.getElementById('optionsAddURL').addEventListener("click", addNewFieldURL);
+document.getElementById('optionsAddWord').addEventListener("click", addNewFieldWord);
+document.getElementById('optionsAddCourierCompany').addEventListener("click", addNewFieldCourierCompany);
 
 document.getElementById("optionsLists").innerHTML += browser.i18n.getMessage("optionsLists");
 document.getElementById("optionsUpdateFrequencyList").innerHTML += browser.i18n.getMessage("optionsUpdateFrequencyList");
