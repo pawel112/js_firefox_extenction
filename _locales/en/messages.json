@@ -1,27 +1,155 @@
 {
-  "extensionName": {
-    "message": "Notify link clicks i18n",
-    "description": "Name of the extension."
-  },
+	"extensionName":
+	{
+		"message": "Buyer Alert"
+	},
 
-  "extensionDescription": {
-    "message": "Shows a notification when the user clicks on links.",
-    "description": "Description of the extension."
-  },
+	"extensionDescription":
+	{
+		"message": "The application notifies the user if the user is on the page with the address or content contained in the filter."
+	},
 
-  "notificationTitle": {
-    "message": "Click notification",
-    "description": "Title of the click notification."
-  },
-
-  "notificationContent": {
-    "message": "You clicked $URL$.",
-    "description": "Tells the user which link they clicked.",
-    "placeholders": {
-      "url" : {
-        "content" : "$1",
-        "example" : "https://developer.mozilla.org"
-      }
-    }
-  }
+	"notificationTitle":
+	{
+		"message": "Warning!"
+	},
+	
+	"optionsTitle":
+	{
+		"message": "Options"
+	},
+	
+	"optionsIgnoredURL":
+	{
+		"message": "Ignored websites:"
+	},
+	
+	"optionsIgnoredWord":
+	{
+		"message": "Ignored words:"
+	},
+	
+	"optionsIgnoredCourierCompany":
+	{
+		"message": "Ignored courier companies:"
+	},
+	
+	"optionsIgnoredNone":
+	{
+		"message": "None"
+	},
+	
+	"optionsIgnoredRemove":
+	{
+		"message": "Remove from the list"
+	},
+	
+	"optionsLists":
+	{
+		"message": "Filter lists:"
+	},
+	
+	"optionsAddToList":
+	{
+		"message": "Add filter"
+	},
+	
+	"optionsRemoveFromList":
+	{
+		"message": "Remove filter"
+	},
+	
+	"optionsUpdateFrequencyList":
+	{
+		"message": "Frequency of filter updates:"
+	},
+	
+	"optionsUpdateFrequencyListDaily":
+	{
+		"message": "Daily"
+	},
+	
+	"optionsUpdateFrequencyListTwiceWeekly":
+	{
+		"message": "Twice weekly"
+	},
+	
+	"optionsUpdateFrequencyListOnceWeek":
+	{
+		"message": "Once a week"
+	},
+	
+	"optionsSave":
+	{
+		"message": "Save"
+	},
+	
+	"optionsUpdate":
+	{
+		"message": "Updated filters of"
+	},
+	
+	"notificationURL":
+	{
+		"message": "Selected page $URL$ is included in $filter$.\n\nIt is recommended to select another store.\nClick to close the message.",
+		"placeholders":
+		{
+			"url" :
+			{
+				"content" : "$1",
+				"example" : "https://developer.mozilla.org"
+			},
+			"filtr" :
+			{
+				"content" : "$2",
+				"example" : "country.json"
+			}
+		}
+	},
+	
+	"notificationProduct":
+	{
+		"message": "On a $URL$ is the product ($product$) in the filter $filter$.\n\nIt is recommended to choose another product.\nClick to close the message.",
+		"placeholders":
+		{
+			"url" :
+			{
+				"content" : "$1",
+				"example" : "https://developer.mozilla.org"
+			},
+			"filtr" :
+			{
+				"content" : "$2",
+				"example" : "country.json"
+			},
+			"product" :
+			{
+				"content" : "$3",
+				"example" : "example"
+			}
+		}
+	},
+	
+	"notificationDelivery":
+	{
+		"message": "On a $URL$ is a delivery method in the filter $filter$.\n\nIt is recommended to choose another delivery method.\nKClick to close the message.",
+		"placeholders":
+		{
+			"url" :
+			{
+				"content" : "$1",
+				"example" : "https://developer.mozilla.org"
+			},
+			"filtr" :
+			{
+				"content" : "$2",
+				"example" : "country.json"
+			},
+			"product" :
+			{
+				"content" : "$3",
+				"example" : "example"
+			}
+		}
+	}
 }

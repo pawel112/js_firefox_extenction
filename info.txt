@@ -1,0 +1,12 @@
+Do zrobienia:
+- wykrywanie zawartości strony www
+- dodać opcje ignorowania
+- poprawki menu (usuwanie z listy)
+
+Zrobione:
+- automatyczna aktualizacja filtrów
+- menu
+- pobieranie pliku
+- wykrywanie strony url
+- tłumaczenie angielski
+- zapis filtrów do opcji

@@ -9,8 +9,6 @@
 		"48": "icons/link-48.png"
 	},
 
-	"permissions": ["notifications"],
-
 	"background":
 	{
 		"scripts": ["js/background-script.js"]
@@ -27,7 +25,19 @@
       "page": "html/options.html"
   	},
 	
-	"permissions": ["storage"],
+	"permissions":
+	[
+		"notifications",
+		"storage",
+		"http://*/",
+		"https://*/"
+	],
   
+	"web_accessible_resources":
+	[
+		"html/*.html",
+		"js/*.js"
+	],
+	
 	"default_locale": "en"
 }

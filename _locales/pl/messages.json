@@ -84,9 +84,9 @@
 		"message": "Zapisz"
 	},
 	
-	"optionsClearSettings":
+	"optionsUpdate":
 	{
-		"message": "Ustawienia fabryczne"
+		"message": "Aktualizacja filtrów z dnia"
 	},
 	
 	"notificationURL":

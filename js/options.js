@@ -1,8 +1,35 @@
+function getData()
+{
+	var date = "";
+	browser.storage.local.get().then((res) =>
+	{
+		if (res.optionsUpdateData != undefined)
+		{
+			document.getElementById("optionsTitle").innerHTML += ("<br/>"+browser.i18n.getMessage("optionsUpdate")+" "+res.optionsUpdateData+".");	
+		}
+		else
+		{
+			document.getElementById("optionsTitle").innerHTML += ("<br/>"+browser.i18n.getMessage("optionsUpdate")+" "+browser.i18n.getMessage("optionsIgnoredNone").toLocaleLowerCase()+".");	
+		}
+		
+	});
+}
+
+function isValidURL(url)
+{
+    var RegExp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    if (RegExp.test(url))
+	{
+        return true;
+    }
+	else
+	{
+        return false;
+    }
+} 
+
 function saveOptions(e)
 {
-	//TODO
-	//SPRAWDZANIE PÓL
-	
 	var updateFrequencyListValue = 2;
 	var lists = new Array();
 	var ignoredURL = new Array();
@@ -11,11 +38,17 @@ function saveOptions(e)
 	
 	for (var i=0; i<document.getElementsByName("lists").length; i++)
 	{
-		lists.push (document.getElementsByName("lists")[i].value);
+		if (isValidURL(document.getElementsByName("lists")[i].value) == true)
+		{
+			lists.push (document.getElementsByName("lists")[i].value);
+		}
 	}
 	for (var i=0; i<document.getElementsByName("ignoredURL").length; i++)
 	{
-		ignoredURL.push (document.getElementsByName("ignoredURL")[i].value);
+		if (isValidURL(document.getElementsByName("ignoredURL")[i].value) == true)
+		{
+			ignoredURL.push (document.getElementsByName("ignoredURL")[i].value);
+		}
 	}
 	for (var i=0; i<document.getElementsByName("ignoredWord").length; i++)
 	{
@@ -43,6 +76,7 @@ function saveOptions(e)
 		optionsIgnoredWord: ignoredWord,
 		optionsIgnoredCourierCompany: ignoredCourierCompany
 	});
+	updateData();
 	e.preventDefault();
 }
 
@@ -60,7 +94,7 @@ function restoreOptions()
 		}
 		document.getElementsByName("optionsUpdateFrequencyListValue")[res.optionsUpdateFrequencyListValue].checked = true;
 		
-		if (res.optionsLists.length != 0)
+		if ((res.optionsLists != undefined) && (res.optionsLists.length != 0))
 		{
 			for (var i=0; i<res.optionsLists.length; i++)
 			{
@@ -81,7 +115,7 @@ function restoreOptions()
 			});
 		}
 		
-		if (res.optionsIgnoredURL.length != 0)
+		if ((res.optionsIgnoredURL != undefined) && (res.optionsIgnoredURL.length != 0))
 		{
 			for (var i=0; i<res.optionsIgnoredURL.length; i++)
 			{
@@ -102,7 +136,7 @@ function restoreOptions()
 			});
 		}
 		
-		if (res.optionsIgnoredWord.length != 0)
+		if ((res.optionoptionsIgnoredWordsLists != undefined) && (res.optionsIgnoredWord.length != 0))
 		{
 			for (var i=0; i<res.optionsIgnoredWord.length; i++)
 			{
@@ -123,7 +157,7 @@ function restoreOptions()
 			});
 		}
 		
-		if (res.optionsIgnoredCourierCompany.length != 0)
+		if ((res.optionsIgnoredCourierCompany != undefined) && (res.optionsIgnoredCourierCompany.length != 0))
 		{
 			for (var i=0; i<res.optionsIgnoredCourierCompany.length; i++)
 			{
@@ -146,80 +180,95 @@ function restoreOptions()
 	});
 }
 
-function removeLists(numer)
+function removeLists(number)
 {
+	console.log (number);
+	
 	var temp = new Array();
 	browser.storage.local.get().then((res) =>
 	{
 		temp = res.optionsLists;
-		temp.splice (numer, 1);
-	});
-	
-	browser.storage.local.set
- 	({	  
-		optionsLists: temp
+		temp.splice (number, 1);
+
+		browser.storage.local.set
+		({	  
+			optionsLists: temp
+		});
+
+		location.reload();
 	});
 }
 
-function removeURL(numer)
+function removeURL(number)
 {
 	var temp = new Array();
 	browser.storage.local.get().then((res) =>
 	{
 		temp = res.optionsIgnoredURL;
-		temp.splice (numer, 1);
-	});
-	
-	browser.storage.local.set
- 	({	  
-		optionsIgnoredURL: temp
+		temp.splice (number, 1);
+
+		browser.storage.local.set
+		({	  
+			optionsIgnoredURL: temp
+		});
+
+		location.reload();
 	});
 }
 
-function clearSettings()
-{
-	browser.storage.local.clear();
-}
-
-function optionsRemoveWord(numer)
+function removeWord(number)
 {
 	var temp = new Array();
 	browser.storage.local.get().then((res) =>
 	{
 		temp = res.optionsIgnoredWord;
-		temp.splice (numer, 1);
-	});
-	
-	browser.storage.local.set
- 	({	  
-		optionsIgnoredWord: temp
+		temp.splice (number, 1);
+
+		browser.storage.local.set
+		({	  
+			optionsIgnoredWord: temp
+		});
+
+		location.reload();
 	});
 }
 
-function removeCourierCompany(numer)
+function removeCourierCompany(number)
 {
 	var temp = new Array();
 	browser.storage.local.get().then((res) =>
 	{
 		temp = res.optionsIgnoredCourierCompany;
-		temp.splice (numer, 1);
-	});
-	
-	browser.storage.local.set
- 	({	  
-		optionsIgnoredCourierCompany: temp
+		temp.splice (e.id, 1);
+
+		browser.storage.local.set
+		({	  
+			optionsIgnoredCourierCompany: temp
+		});
+
+		location.reload();
 	});
 }
 
 function addNewFieldList()
 {
+	if (document.getElementById("optionsLists").innerHTML.search ("<br>"+browser.i18n.getMessage("optionsIgnoredNone")) != -1)
+	{
+		document.getElementById("optionsLists").innerHTML = document.getElementById("optionsLists").innerHTML.replace ("<br>"+browser.i18n.getMessage("optionsIgnoredNone"), "");
+	}
+	
 	var temp = new Array();
 	for (var i=0; i<document.getElementsByName("lists").length; i++)
 	{
 		temp.push (document.getElementsByName("lists")[i].value);
 	}
 	
-	document.getElementById("optionsLists").innerHTML += "<br/><textarea name=\"lists\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveLists\" onclick=\"removeLists("+document.getElementsByName("lists").length+")\">"+browser.i18n.getMessage("optionsRemoveFromList")+"</button>";
+	document.getElementById("optionsLists").innerHTML += "<br/><textarea name=\"lists\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button name=\"optionsRemoveLists\">"+browser.i18n.getMessage("optionsRemoveFromList")+"</button>";
+	
+	for (var i=0; i<document.getElementsByName("optionsRemoveLists").length; i++)
+	{
+		document.getElementsByName("optionsRemoveLists")[i].onclick = function () { removeLists(i); };
+	}
 	
 	for (var i=0; i<temp.length; i++)
 	{
@@ -229,13 +278,23 @@ function addNewFieldList()
 
 function addNewFieldURL()
 {
+	if (document.getElementById("optionsIgnoredURL").innerHTML.search ("<br>"+browser.i18n.getMessage("optionsIgnoredNone")) != -1)
+	{
+		document.getElementById("optionsIgnoredURL").innerHTML = document.getElementById("optionsIgnoredURL").innerHTML.replace ("<br>"+browser.i18n.getMessage("optionsIgnoredNone"), "");
+	}
+	
 	var temp = new Array();
 	for (var i=0; i<document.getElementsByName("ignoredURL").length; i++)
 	{
 		temp.push (document.getElementsByName("ignoredURL")[i].value);
 	}
 	
-	document.getElementById("optionsIgnoredURL").innerHTML += "<br/><textarea name=\"ignoredURL\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveURL\" onclick=\"removeURL("+document.getElementsByName("ignoredURL").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	document.getElementById("optionsIgnoredURL").innerHTML += "<br/><textarea name=\"ignoredURL\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button name=\"optionsRemoveURL\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	
+	for (var i=0; i<document.getElementsByName("optionsRemoveURL").length; i++)
+	{
+		document.getElementsByName("optionsRemoveURL")[i].onclick = function () { removeURL(i); };
+	}
 	
 	for (var i=0; i<temp.length; i++)
 	{
@@ -245,13 +304,23 @@ function addNewFieldURL()
 
 function addNewFieldWord()
 {
+	if (document.getElementById("optionsIgnoredWord").innerHTML.search ("<br>"+browser.i18n.getMessage("optionsIgnoredNone")) != -1)
+	{
+		document.getElementById("optionsIgnoredWord").innerHTML = document.getElementById("optionsIgnoredWord").innerHTML.replace ("<br>"+browser.i18n.getMessage("optionsIgnoredNone"), "");
+	}
+	
 	var temp = new Array();
 	for (var i=0; i<document.getElementsByName("ignoredWord").length; i++)
 	{
 		temp.push (document.getElementsByName("ignoredWord")[i].value);
 	}
 	
-	document.getElementById("optionsIgnoredWord").innerHTML += "<br/><textarea name=\"ignoredWord\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveWord\" onclick=\"removeRemoveWord("+document.getElementsByName("ignoredWord").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	document.getElementById("optionsIgnoredWord").innerHTML += "<br/><textarea name=\"ignoredWord\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button name=\"optionsRemoveWord\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	
+	for (var i=0; i<document.getElementsByName("optionsRemoveWord").length; i++)
+	{
+		document.getElementsByName("optionsRemoveWord")[i].onclick = function () { removeWord(i); };
+	}
 	
 	for (var i=0; i<temp.length; i++)
 	{
@@ -261,17 +330,27 @@ function addNewFieldWord()
 
 function addNewFieldCourierCompany()
 {
+	if (document.getElementById("optionsIgnoredCourierCompany").innerHTML.search ("<br>"+browser.i18n.getMessage("optionsIgnoredNone")) != -1)
+	{
+		document.getElementById("optionsIgnoredCourierCompany").innerHTML = document.getElementById("optionsIgnoredCourierCompany").innerHTML.replace ("<br>"+browser.i18n.getMessage("optionsIgnoredNone"), "");
+	}
+	
 	var temp = new Array();
 	for (var i=0; i<document.getElementsByName("ignoredCourierCompany").length; i++)
 	{
 		temp.push (document.getElementsByName("ignoredCourierCompany")[i].value);
 	}
 	
-	document.getElementById("optionsIgnoredCourierCompany").innerHTML += "<br/><textarea name=\"ignoredCourierCompany\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\"optionsRemoveCourierCompany\" onclick=\"removeCourierCompany("+document.getElementsByName("ignoredCourierCompany").length+")\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
+	document.getElementById("optionsIgnoredCourierCompany").innerHTML += "<br/><textarea name=\"ignoredCourierCompany\" cols=\"100\" rows=\"1\" style=\"width: 400px; height: 15px;\"></textarea><button id=\""+temp.length+"\" name=\"optionsRemoveCourierCompany\">"+browser.i18n.getMessage("optionsIgnoredRemove")+"</button>";
 	
 	for (var i=0; i<temp.length; i++)
 	{
 		document.getElementsByName("ignoredCourierCompany")[i].value = temp[i];
+	}
+	
+	for (var i=0; i<document.getElementsByName("ignoredCourierCompany").length; i++)
+	{
+		document.getElementsByName("optionsRemoveCourierCompany")[i].onclick = function () { removeCourierCompany(parseInt(document.getElementsByName("optionsRemoveCourierCompany")[i].id)); };	
 	}
 }
 
@@ -281,7 +360,6 @@ document.getElementById('optionsAddList').addEventListener("click", addNewFieldL
 document.getElementById('optionsAddURL').addEventListener("click", addNewFieldURL);
 document.getElementById('optionsAddWord').addEventListener("click", addNewFieldWord);
 document.getElementById('optionsAddCourierCompany').addEventListener("click", addNewFieldCourierCompany);
-document.getElementById('optionsClearSettings').addEventListener("click", clearSettings);
 
 document.getElementById("optionsLists").innerHTML += browser.i18n.getMessage("optionsLists");
 document.getElementById("optionsUpdateFrequencyList").innerHTML += browser.i18n.getMessage("optionsUpdateFrequencyList");
@@ -298,4 +376,9 @@ document.getElementById("optionsAddList").innerHTML += browser.i18n.getMessage("
 document.getElementById("optionsAddURL").innerHTML = browser.i18n.getMessage("optionsAddToList");
 document.getElementById("optionsAddWord").innerHTML += browser.i18n.getMessage("optionsAddToList");
 document.getElementById("optionsAddCourierCompany").innerHTML += browser.i18n.getMessage("optionsAddToList");
-document.getElementById("optionsClearSettings").innerHTML += browser.i18n.getMessage("optionsClearSettings");
+getData();
+
+for (var i=0; i<document.getElementsByName("ignoredCourierCompany").length; i++)
+{
+	document.getElementsByName("optionsRemoveCourierCompany")[i].onclick = function () { removeCourierCompany(parseInt(document.getElementsByName("optionsRemoveCourierCompany")[i].id)); };	
+}

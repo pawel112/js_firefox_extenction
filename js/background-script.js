@@ -44,9 +44,15 @@ function courierCompanyInWeb (web_text, json_text)
 
 function notify (message)
 {
-	console.log("background script received message");
+	//console.log("background script received message");
+	
+	$.getScript('update-data.js, function()
+	{
+		checkUpdate();
+	});
+	
 	var title = browser.i18n.getMessage("notificationTitle");
-	var json_text = '{ "version": 1, "date": "20.04.2017", "name": "url.json", "websites": [{ "id": 0, "name": "amazon.de" }, { "id": 1, "name": "dhl.de" }], "word": [{ "id": 0, "name": "Volkswagen" }, { "id": 1, "name": "BMW" }], "courier_company": [{ "id": 0, "name": "DHL" }, { "id": 1, "name": "DPD" }]}';
+	var json_text = '';
 	var web_text = document.body.innerText;
 	var result = URLinJson (message.url, json_text);
 	var content = null;
