@@ -1,8 +1,3 @@
-/*
-Log that we received the message.
-Then display a notification. The notification contains the URL,
-which we read from the message.
-*/
 function URLinJson (url, json_text)
 {
 	var obj = JSON.parse(json_text);
@@ -44,63 +39,94 @@ function courierCompanyInWeb (web_text, json_text)
 
 function notify (message)
 {
-	//console.log("background script received message");
-	
-	$.getScript('update-data.js, function()
+	browser.storage.local.get().then((res) =>
 	{
-		checkUpdate();
+		for (var i=0; i<res.optionsJson.length; i++)
+		{	
+			if (URLinJson (message.url, res.optionsJson[i])[0] == true)
+			{
+				browser.notifications.create
+				({
+					"type": "basic",
+					"iconUrl": browser.extension.getURL("../icons/link-48.png"),
+					"title": browser.i18n.getMessage("notificationTitle"),
+					"message": browser.i18n.getMessage("notificationURL", [ message.url, JSON.parse(res.optionsJson[i]).name])
+				});
+				return;
+			}
+			else if (wordInWeb (web_text, res.optionsJson[i])[0] == true)
+			{
+				browser.notifications.create
+				({
+					"type": "basic",
+					"iconUrl": browser.extension.getURL("../icons/link-48.png"),
+					"title": browser.i18n.getMessage("notificationTitle"),
+					"message": browser.i18n.getMessage("notificationProduct", [ document.body.textContent, JSON.parse(res.optionsJson[i]).name, wordInWeb (web_text, res.optionsJson[i])[1]])
+				});
+				return;
+			}
+			else if (courierCompanyInWeb (web_text, res.optionsJson[i])[0] == true)
+			{
+				browser.notifications.create
+				({
+					"type": "basic",
+					"iconUrl": browser.extension.getURL("../icons/link-48.png"),
+					"title": browser.i18n.getMessage("notificationTitle"),
+					"message": browser.i18n.getMessage("notificationDelivery", [ document.body.textContent, JSON.parse(res.optionsJson[i]).name, courierCompanyInWeb (web_text, res.optionsJson[i])[1]])
+				});
+				return;
+			}
+		}
 	});
 	
-	var title = browser.i18n.getMessage("notificationTitle");
-	var json_text = '';
+	
+	
+	/*var title = browser.i18n.getMessage("notificationTitle");
+	var json_text = '{ "version": 1, "date": "20.04.2017", "name": "url.json", "websites": [{ "id": 0, "name": "amazon.de" }, { "id": 1, "name": "dhl.de" }], "word": [{ "id": 0, "name": "Volkswagen" }, { "id": 1, "name": "BMW" }], "courier_company": [{ "id": 0, "name": "DHL" }, { "id": 1, "name": "DPD" }]}';
 	var web_text = document.body.innerText;
 	var result = URLinJson (message.url, json_text);
 	var content = null;
 	
-	if ((message.url == null) || (message.url == "") || (message.url == undefined))
+	browser.storage.local.get().then((res) =>
 	{
-		return;
-	}
-	else if (result != false)
-	{
-		content = browser.i18n.getMessage("notificationURL", [ message.url, "aaa.json"]);
-	}
-	else 
-	{
-		result = wordInWeb (web_text, json_text);
 		if (result != false)
 		{
-			content = browser.i18n.getMessage("notificationProduct", [ message.url, "aaa.json", result[1]]);
+			content = browser.i18n.getMessage("notificationURL", [ message.url, "aaa.json"]);
 		}
-		else
+		else 
 		{
-			result = courierCompanyInWeb (web_text, json_text);
+			result = wordInWeb (web_text, json_text);
 			if (result != false)
 			{
-				content = browser.i18n.getMessage("notificationDelivery", [ message.url, "aaa.json", result[1]]);
+				content = browser.i18n.getMessage("notificationProduct", [ message.url, "aaa.json", result[1]]);
 			}
 			else
 			{
-				return;
+				result = courierCompanyInWeb (web_text, json_text);
+				if (result != false)
+				{
+					content = browser.i18n.getMessage("notificationDelivery", [ message.url, "aaa.json", result[1]]);
+				}
+				else
+				{
+					return;
+				}
 			}
 		}
-	}
-		
-	browser.notifications.create
-	({
-		"type": "basic",
-		"iconUrl": browser.extension.getURL("../icons/link-48.png"),
-		"title": title,
-		"message": content
-	});
-	
-	browser.notifications.onClicked.addListener(function()
-	{
-  		console.log('Notification  was clicked by the user');
-	});
+
+		browser.notifications.create
+		({
+			"type": "basic",
+			"iconUrl": browser.extension.getURL("../icons/link-48.png"),
+			"title": title,
+			"message": content
+		});
+
+		browser.notifications.onClicked.addListener(function()
+		{
+			console.log('Notification  was clicked by the user');
+		});
+	});*/
 }
 
-/*
-Assign `notify()` as a listener to messages from the content script.
-*/
 browser.runtime.onMessage.addListener(notify);
